@@ -1,6 +1,6 @@
 # 🤖 2. Tech Project (Robotics Arm Control)
-```markdown
-# 🤖 Robotics Arm Control
+
+#🤖  Robotics Arm Control
 
 A project exploring robotic arm kinematics and control using C++ and Python.
 
