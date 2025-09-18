@@ -4,6 +4,16 @@
 
 A project exploring robotic arm kinematics and control using C++ and Python.
 
+The Robotic Arm Control Project is a simulation + control system demonstrating how mechanical engineering principles and software algorithms work together in robotics.
+
+This project uses Python/C++ and robotics frameworks (e.g., ROS, Gazebo, or MATLAB/Simulink) to:
+ - Simulate a robotic arm with multiple degrees of freedom.
+ - Implement inverse kinematics (IK) and forward kinematics (FK)
+ - Apply control algorithms (PID, trajectory planning).
+ - Visualize motion paths and joint behavior.
+
+It highlights the hybrid skill set of mechanical engineering (rigid body dynamics, control theory) and software engineering (algorithms, coding, simulation).
+
 ## 🔧 Features
 - Implemented forward & inverse kinematics.
 - PID control for precise movement.
