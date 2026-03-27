@@ -13,10 +13,34 @@ This project focuses on building a working, testable simulation rather than just
 ## 🚀 Demo
 *Coming soon – currently implementing simulation*
 
+## 📈 Results
+*Plots and simulation output will be added here*
+
 
 📊 Example Output
 
 *Output plots will be added after simulation is complete*
+
+Once implemented, the system will:
+- Compute joint angles for a target position  
+- Simulate arm movement toward the target  
+- Generate trajectory and joint angle plots  
+
+Example (planned):
+- Target: (0.5, 0.3)
+- Output: joint angles + trajectory plot
+
+## 🚧 Current Status
+
+This project is currently under active development.
+
+Current progress:
+- [x] Project structure defined  
+- [ ] Forward kinematics implementation  
+- [ ] Inverse kinematics solver  
+- [ ] Simulation + plotting  
+
+Demo and results will be added once core functionality is complete.
 
 
 📁 Project Structure
