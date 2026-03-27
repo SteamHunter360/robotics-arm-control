@@ -2,81 +2,94 @@
 
 #🤖  Robotics Arm Control
 
-A project exploring robotic arm kinematics and control using C++ and Python.
+Robotics Arm Control
 
-The Robotic Arm Control Project is a simulation + control system demonstrating how mechanical engineering principles and software algorithms work together in robotics.
+A Python-based robotics project demonstrating forward kinematics, inverse kinematics, and trajectory tracking for a planar robotic arm.
 
-This project uses Python/C++ and robotics frameworks (e.g., ROS, Gazebo, or MATLAB/Simulink) to:
- - Simulate a robotic arm with multiple degrees of freedom.
- - Implement inverse kinematics (IK) and forward kinematics (FK)
- - Apply control algorithms (PID, trajectory planning).
- - Visualize motion paths and joint behavior.
+This project focuses on building a working, testable simulation rather than just theoretical models.
 
-It highlights the hybrid skill set of mechanical engineering (rigid body dynamics, control theory) and software engineering (algorithms, coding, simulation).
+🚀 Demo
 
-## 🔧 Features
-- Implemented forward & inverse kinematics.
-- PID control for precise movement.
-- Simulation environment (Gazebo/ROS).
-- Real-time plotting of joint angles.
 
-## 🛠 Tech Stack
-- C++ for control algorithms.
-- Python (matplotlib, numpy) for analysis.
-- ROS (Robot Operating System).
-- Gazebo for simulation.
 
-## Project Structure
-RoboticArmControl/
-├── models/                  # CAD/STL/URDF files describing the robotic arm
 
-│   ├── arm.urdf             # Unified Robot Description Format file
+📊 Example Output
 
-│   └── meshes/              # Geometry files for simulation
+
+
+
+
+Sample Result:
+
+Target Position: (0.45, 0.30)
+Final Error: 0.008 m
+Converged in: 42 iterations
+⚙️ Features
+Forward Kinematics (FK) for planar robotic arm
+Numerical Inverse Kinematics (IK) solver
+Target position tracking
+Joint angle and trajectory plotting
+Error measurement and convergence tracking
+🧱 Tech Stack
+Python
+NumPy
+Matplotlib
+
+
+📁 Project Structure
+robotics-arm-control/
+│── src/
+│   ├── kinematics.py        # FK + IK implementations
+│   ├── controller.py        # trajectory / control logic
+│   └── simulator.py         # simulation + visualization
 │
-├── src/                     # Core source code
-
-│   ├── kinematics.py        # Forward & inverse kinematics functions
-
-│   ├── controllers.py       # PID/trajectory controllers
-
-│   ├── simulator.py         # Interface to ROS/Gazebo or custom simulation
-
-│   └── utils.py             # Helper functions
+│── tests/
+│   └── test_kinematics.py   # FK/IK validation
 │
-├── notebooks/               # Jupyter notebooks for experiments
-│   ├── ik_solver_demo.ipynb
-│   └── trajectory_planner.ipynb
+│── results/
+│   ├── gifs/
+│   └── plots/
 │
-├── results/                 # Output data
+│── main.py                  # run simulation
+│── requirements.txt
+│── README.md
+🛠️ How to Run
+git clone https://github.com/SteamHunter360/robotics-arm-control.git
+cd robotics-arm-control
 
-│   ├── plots/               # Joint angle/time, error plots
+pip install -r requirements.txt
+python main.py
+Expected Behaviour:
+A simulation window opens showing the robotic arm
+The arm moves toward a target position
+Trajectory and joint plots are saved in /results/plots
+🧪 Testing
 
-│   └── gifs/                # Demo animations of arm movement
-│
-├── docs/                    # Documentation & diagrams
+Run basic validation tests:
 
-│   ├── system_design.md     # Architecture and design notes
+pytest tests/
 
-│   ├── control_theory.md    # Explanation of PID & trajectory control
+Tests verify:
 
-│   └── references.md        # Papers, textbooks, tutorials
-│
-├── tests/                   # Unit tests
-│   ├── test_kinematics.py
-│   ├── test_controllers.py
-│   └── test_utils.py
-│
-├── requirements.txt         # Dependencies
+Forward kinematics correctness
+IK solution accuracy
+End-effector error within tolerance
+🧠 What I Learned
+Implementing kinematic models from first principles
+Numerical solving for inverse kinematics
+Debugging control and convergence issues
+Structuring engineering code for clarity and testing
 
-├── main.py                  # Run a simulation with chosen controller
-└── README.md
 
-## 📌 Future Improvements
-1. Advanced control techniques
- - Implement Model Predictive Control (MPC).
- - Add adaptive control for uncertain payloads.
+🔜 Next Steps
+Extend to 3DOF / 6DOF robotic arm
+Add PID-based joint control
+Integrate with ROS / Gazebo
+Compare different IK solving methods
+📌 Notes
 
-2.Integration with sensors
- - Add vision-based control (OpenCV, camera input).
- - Simulate real sensor noise and filtering (Kalman Filter, EKF).
+This project is intentionally focused on building a working system with visible outputs rather than over-engineering complexity.
+
+👤 Author
+
+Mechanical Engineering student building at the intersection of robotics, software, and control systems.
