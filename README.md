@@ -10,30 +10,13 @@ This project focuses on building a working, testable simulation rather than just
 
 🚀 Demo
 
-
+## 🚀 Demo
+*Coming soon – currently implementing simulation*
 
 
 📊 Example Output
 
-
-
-
-
-Sample Result:
-
-Target Position: (0.45, 0.30)
-Final Error: 0.008 m
-Converged in: 42 iterations
-⚙️ Features
-Forward Kinematics (FK) for planar robotic arm
-Numerical Inverse Kinematics (IK) solver
-Target position tracking
-Joint angle and trajectory plotting
-Error measurement and convergence tracking
-🧱 Tech Stack
-Python
-NumPy
-Matplotlib
+*Output plots will be added after simulation is complete*
 
 
 📁 Project Structure
