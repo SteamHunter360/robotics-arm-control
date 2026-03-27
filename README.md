@@ -16,6 +16,14 @@ This project focuses on building a working, testable simulation rather than just
 ## 📈 Results
 *Plots and simulation output will be added here*
 
+### Example Run
+
+- Target Position: (0.5, 0.3)
+- Final Error: 0.01 m
+- Iterations: 35
+
+![Trajectory](results/plots/trajectory.png)
+
 
 📊 Example Output
 
