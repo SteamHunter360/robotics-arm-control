@@ -65,8 +65,11 @@ python main.py
 Expected Behaviour:
 
 A simulation window opens showing the robotic arm
+
 The arm moves toward a target position
+
 Trajectory and joint plots are saved in /results/plots
+
 🧪 Testing
 
 Run validation tests:
