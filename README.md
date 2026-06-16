@@ -92,6 +92,8 @@ Result:
 x = 0.901m
 y = 1.431m
 
+--------------
+
 Planned Example Output:
 
 Target Position: (0.5, 0.3)
