@@ -83,13 +83,16 @@ Target Position: (0.5, 0.3)
 Computed Joint Angles
 End-effector trajectory plot
 Final position error
+
 ⚙️ Features (Planned)
 Forward kinematics (FK) for planar robotic arm
 Numerical inverse kinematics (IK) solver
 Target position tracking
 Trajectory generation and visualization
 Joint angle and error plotting
-📁 Project Structure
+
+
+## 📁 Project Structure
 robotics-arm-control/
 │── src/
 │   ├── kinematics.py        # FK + IK implementations
@@ -122,7 +125,7 @@ The arm moves toward a target position
 
 Trajectory and joint plots are saved in /results/plots
 
-🧪 Testing
+## 🧪 Testing
 
 Run validation tests:
 
@@ -135,7 +138,7 @@ Inverse kinematics accuracy
 End-effector error within tolerance
 
 
-🧠 What I Learned
+## 🧠 What I Learned
 Implementing kinematic models from first principles
 Solving inverse kinematics numerically
 Debugging control and convergence behaviour
@@ -146,10 +149,10 @@ Add PID-based joint control
 Integrate with ROS / Gazebo
 Compare different IK solving methods
 
-📌 Notes
+## 📌 Notes
 
 This project is intentionally focused on building a working system with visible outputs, rather than over-engineering complexity.
 
-👤 Author
+## 👤 Author
 
 Mechanical Engineering student building at the intersection of robotics, software, and control systems.
