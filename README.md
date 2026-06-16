@@ -40,6 +40,21 @@ x = L1 cos(theta1) + L2 cos(theta1 + theta2)
 y = L1 sin(theta1) + L2 sin(theta1 + theta2) 
 
 ```
+Example Input 
+
+```text
+L1 = 1.0
+L2 = 0.75
+theta1 = 45 degrees
+theta2 = 30 degrees
+```
+Example Output
+
+```text
+End-effector position: x = 0.901, y = 1.431
+```
+
+
 
 🚧 Current Status
 
