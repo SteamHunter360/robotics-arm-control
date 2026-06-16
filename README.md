@@ -127,6 +127,26 @@ robotics-arm-control/
 │── requirements.txt
 │── README.md
 
+
+## Robot Arm Visualisation
+
+The robotic arm is visualised using Matplotlib.
+
+Given:
+
+- Joint Angles
+- Link Lengths
+
+the simulation calculates:
+
+- Joint 1 Position
+- Joint 2 Position
+- End Effector Position
+
+and displays the robotic arm configuration graphically.
+
+This provides visual verification that the forward kinematics calculations are functioning correctly.
+
 ## 🛠️ How to Run
 git clone https://github.com/SteamHunter360/robotics-arm-control.git
 cd robotics-arm-control
