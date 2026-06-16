@@ -1,135 +1,19 @@
-🤖 Robotics Arm Control
+# 🤖 Robotics Arm Control
 
-A Python-based robotics project demonstrating forward kinematics, inverse kinematics, and trajectory tracking for a planar robotic arm.
+A Python-based robotics project demonstrating:
 
-This project focuses on building a working, testable simulation rather than just theoretical models.
+* Forward Kinematics
+* Inverse Kinematics
+* Trajectory Planning
+* Robotic Arm Visualisation
 
-```text
-import math
+for a planar robotic manipulator.
 
-def forward_kinematics(theta1, theta2, L1, L2):
-```
-    
-"""
-    Calculates the end-effector position of a 2-link planar robotic arm.
+The objective of this project is to build a working, testable robotics simulation while developing practical skills in robotics, automation, control systems, and engineering software development.
 
-    theta1, theta2: joint angles in degrees
-    L1, L2: link lengths
-    """
+---
 
-    theta1 = math.radians(theta1)
-    theta2 = math.radians(theta2)
-
-    x = L1 * math.cos(theta1) + L2 * math.cos(theta1 + theta2)
-    y = L1 * math.sin(theta1) + L2 * math.sin(theta1 + theta2)
-
-    return x, y
-
-```text
-if __name__ == "__main__":
-    x, y = forward_kinematics(theta1=45, theta2=30, L1=1.0, L2=0.75)
-
-    print(f"End-effector position: x = {x:.3f}, y = {y:.3f}")
-   ``` 
-
-## Forward Kinematics
-
-Forward kinematics calculates the position of the robot arm's end effector from the known joint angles and link lengths.
-
-For my two-link planar robotic arm:
-
-```text
-x = L1 cos(theta1) + L2 cos(theta1 + theta2)
-
-y = L1 sin(theta1) + L2 sin(theta1 + theta2) 
-
-```
-Example Input 
-
-```text
-L1 = 1.0
-L2 = 0.75
-theta1 = 45 degrees
-theta2 = 30 degrees
-```
-Example Output
-
-```text
-End-effector position: x = 0.901, y = 1.431
-```
-
-
-
-🚧 Current Status
-
-This project is currently under active development.
-
-Progress:
-
-✅ Project structure defined
-🔄 Forward kinematics implementation 
-🔄 Inverse kinematics solver (in progress)
-🔄 Simulation and plotting (in progress)
-
-Demo and results will be added as core functionality is completed.
-
-🚀 Demo
-
-Coming soon – simulation currently in development
-
-## 📊 Results
-
-* Plots and simulation output will be added here once implementation is complete.
-The forward kinematics implementation successfully computes the end-effector position for a two-link planar manipulator.
-
-Example test case:
-
-L1 = 1.0m
-L2 = 0.75m
-
-Theta1 = 45°
-Theta2 = 30°
-
-Result:
-
-x = 0.901m
-y = 1.431m
-
---------------
-
-Planned Example Output:
-
-Target Position: (0.5, 0.3)
-Computed Joint Angles
-End-effector trajectory plot
-Final position error
-
-⚙️ Features (Planned)
-Forward kinematics (FK) for planar robotic arm
-Numerical inverse kinematics (IK) solver
-Target position tracking
-Trajectory generation and visualization
-Joint angle and error plotting
-
-
-## 📁 Project Structure
-robotics-arm-control/
-│── src/
-│   ├── kinematics.py        # FK + IK implementations
-│   ├── controller.py        # trajectory / control logic
-│   └── simulator.py         # simulation + visualization
-│
-│── tests/
-│   └── test_kinematics.py   # FK/IK validation
-│
-│── results/
-│   ├── gifs/
-│   └── plots/
-│
-│── main.py                  # run simulation
-│── requirements.txt
-│── README.md
-
+# 🚀 Demo
 
 ## Robot Arm Visualisation
 
@@ -137,73 +21,268 @@ The robotic arm is visualised using Matplotlib.
 
 Given:
 
-- Joint Angles
-- Link Lengths
+* Joint Angles
+* Link Lengths
 
 the simulation calculates:
 
-- Joint 1 Position
-- Joint 2 Position
-- End Effector Position
+* Joint 1 Position
+* Joint 2 Position
+* End-Effector Position
 
 and displays the robotic arm configuration graphically.
 
 This provides visual verification that the forward kinematics calculations are functioning correctly.
 
-## 🛠️ How to Run
+### Example Output
+
+![Robot Arm Visualisation](images/robot_arm_visualisation.png)
+
+### Planned Future Outputs
+
+* Animated arm motion
+* Trajectory tracking visualisation
+* Joint angle plots
+* End-effector error plots
+
+---
+
+# ⚙️ Key Features
+
+### Current Features
+
+✅ Forward Kinematics Implementation
+
+✅ End-Effector Position Calculation
+
+✅ Engineering Documentation
+
+### Features In Development
+
+🔄 Inverse Kinematics Solver
+
+🔄 Trajectory Tracking
+
+🔄 Simulation Environment
+
+🔄 Matplotlib Visualisation
+
+### Planned Features
+
+🚀 PID Control
+
+🚀 ROS Integration
+
+🚀 Obstacle Avoidance
+
+🚀 3D Robotic Arm Simulation
+
+---
+
+# 📐 Forward Kinematics
+
+Forward kinematics calculates the position of the robot arm's end effector from the known joint angles and link lengths.
+
+For a two-link planar robotic arm:
+
+```text
+x = L1 cos(theta1) + L2 cos(theta1 + theta2)
+
+y = L1 sin(theta1) + L2 sin(theta1 + theta2)
+```
+
+Where:
+
+* L1 = Length of Link 1
+* L2 = Length of Link 2
+* theta1 = Joint 1 Angle
+* theta2 = Joint 2 Angle
+* x, y = End-Effector Position
+
+### Example Input
+
+```text
+L1 = 1.0
+L2 = 0.75
+
+theta1 = 45°
+theta2 = 30°
+```
+
+### Example Output
+
+```text
+End-effector position:
+
+x = 0.901
+y = 1.431
+```
+
+---
+
+# 📊 Results
+
+The forward kinematics implementation successfully computes the end-effector position for a two-link planar manipulator.
+
+### Test Case
+
+```text
+L1 = 1.0m
+L2 = 0.75m
+
+theta1 = 45°
+theta2 = 30°
+```
+
+### Result
+
+```text
+x = 0.901m
+y = 1.431m
+```
+
+### Planned Future Results
+
+```text
+Target Position: (0.5, 0.3)
+
+Computed Joint Angles
+
+End-Effector Trajectory Plot
+
+Final Position Error
+```
+
+---
+
+# 📁 Project Structure
+
+```text
+robotics-arm-control/
+
+│── src/
+│   ├── kinematics.py
+│   ├── controller.py
+│   ├── simulator.py
+│   └── visualisation.py
+│
+│── tests/
+│   └── test_kinematics.py
+│
+│── images/
+│   └── robot_arm_visualisation.png
+│
+│── results/
+│   ├── gifs/
+│   └── plots/
+│
+│── main.py
+│── requirements.txt
+│── README.md
+```
+
+---
+
+# 🛠️ Installation & Usage
+
+Clone the repository:
+
+```bash
 git clone https://github.com/SteamHunter360/robotics-arm-control.git
+
 cd robotics-arm-control
+```
 
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
+```
+
+Run the simulation:
+
+```bash
 python main.py
+```
 
-Expected Behaviour:
+---
 
-A simulation window opens showing the robotic arm
+# 🎯 Expected Behaviour
 
-The arm moves toward a target position
+When complete:
 
-Trajectory and joint plots are saved in /results/plots
+* A simulation window opens
+* The robotic arm is displayed
+* The arm moves toward a target position
+* Trajectory plots are generated
+* Simulation results are saved automatically
 
-## 🧪 Testing
+---
+
+# 🧪 Testing
 
 Run validation tests:
 
+```bash
 pytest tests/
+```
 
-Tests will verify:
+Testing verifies:
 
-Forward kinematics correctness
-Inverse kinematics accuracy
-End-effector error within tolerance
+* Forward Kinematics Correctness
+* Inverse Kinematics Accuracy
+* End-Effector Position Error
+* Numerical Stability
 
-## Future Development
+---
 
-Planned improvements:
+# 🔮 Future Development
 
-- Animated Motion
-- Trajectory Tracking
-- Obstacle Avoidance
-- ROS Integration
-- PID Control
-- 3D Robotic Arm Model
+Planned improvements include:
 
+* Inverse Kinematics Solver
+* Animated Robotic Arm Motion
+* PID Joint Control
+* ROS Integration
+* Gazebo Integration
+* Obstacle Avoidance
+* 3DOF Extension
+* 6DOF Extension
+* 3D Simulation Environment
 
-## 🧠 What I Learned
-Implementing kinematic models from first principles
-Solving inverse kinematics numerically
-Debugging control and convergence behaviour
-Structuring engineering code for clarity and testing
-🔜 Next Steps
-Extend to 3DOF / 6DOF robotic arm
-Add PID-based joint control
-Integrate with ROS / Gazebo
-Compare different IK solving methods
+---
 
-## 📌 Notes
+# 🧠 What I Learned
 
-This project is intentionally focused on building a working system with visible outputs, rather than over-engineering complexity.
+This project is helping develop practical understanding of:
 
-## 👤 Author
+* Forward Kinematics
+* Inverse Kinematics
+* Robotics Mathematics
+* Control Systems
+* Numerical Methods
+* Python Engineering Applications
+* Engineering Software Development
 
-Mechanical Engineering student building at the intersection of robotics, software, and control systems.
+---
+
+# 📌 Notes
+
+This project is intentionally focused on building a working robotics system with visible outputs and engineering validation rather than theoretical discussion alone.
+
+The emphasis is on producing a testable simulation that demonstrates robotics concepts through implementation.
+
+---
+
+# 👤 Author
+
+Mechanical Engineering Student
+
+Interested in:
+
+* Robotics
+* Automation
+* Control Systems
+* Mechanical Engineering
+* Engineering Software Development
+* Mechatronics
