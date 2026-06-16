@@ -22,11 +22,12 @@ def forward_kinematics(theta1, theta2, L1, L2):
 
     return x, y
 
-
+```text
 if __name__ == "__main__":
     x, y = forward_kinematics(theta1=45, theta2=30, L1=1.0, L2=0.75)
 
     print(f"End-effector position: x = {x:.3f}, y = {y:.3f}")
+   ``` 
 
 ## Forward Kinematics
 
