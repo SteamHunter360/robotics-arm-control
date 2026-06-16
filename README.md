@@ -4,6 +4,43 @@ A Python-based robotics project demonstrating forward kinematics, inverse kinema
 
 This project focuses on building a working, testable simulation rather than just theoretical models.
 
+import math
+
+def forward_kinematics(theta1, theta2, L1, L2):
+    """
+    Calculates the end-effector position of a 2-link planar robotic arm.
+
+    theta1, theta2: joint angles in degrees
+    L1, L2: link lengths
+    """
+
+    theta1 = math.radians(theta1)
+    theta2 = math.radians(theta2)
+
+    x = L1 * math.cos(theta1) + L2 * math.cos(theta1 + theta2)
+    y = L1 * math.sin(theta1) + L2 * math.sin(theta1 + theta2)
+
+    return x, y
+
+
+if __name__ == "__main__":
+    x, y = forward_kinematics(theta1=45, theta2=30, L1=1.0, L2=0.75)
+
+    print(f"End-effector position: x = {x:.3f}, y = {y:.3f}")
+
+## Forward Kinematics
+
+Forward kinematics calculates the position of the robot arm's end effector from the known joint angles and link lengths.
+
+For my two-link planar robotic arm:
+
+```text
+x = L1 cos(theta1) + L2 cos(theta1 + theta2)
+
+y = L1 sin(theta1) + L2 sin(theta1 + theta2) 
+
+```
+
 🚧 Current Status
 
 This project is currently under active development.
@@ -11,7 +48,7 @@ This project is currently under active development.
 Progress:
 
 ✅ Project structure defined
-🔄 Forward kinematics implementation (in progress)
+🔄 Forward kinematics implementation 
 🔄 Inverse kinematics solver (in progress)
 🔄 Simulation and plotting (in progress)
 
