@@ -127,7 +127,7 @@ robotics-arm-control/
 │── requirements.txt
 │── README.md
 
-🛠️ How to Run
+## 🛠️ How to Run
 git clone https://github.com/SteamHunter360/robotics-arm-control.git
 cd robotics-arm-control
 
@@ -153,6 +153,17 @@ Tests will verify:
 Forward kinematics correctness
 Inverse kinematics accuracy
 End-effector error within tolerance
+
+## Future Development
+
+Planned improvements:
+
+- Animated Motion
+- Trajectory Tracking
+- Obstacle Avoidance
+- ROS Integration
+- PID Control
+- 3D Robotic Arm Model
 
 
 ## 🧠 What I Learned
