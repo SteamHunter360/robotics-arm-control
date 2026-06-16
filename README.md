@@ -4,10 +4,13 @@ A Python-based robotics project demonstrating forward kinematics, inverse kinema
 
 This project focuses on building a working, testable simulation rather than just theoretical models.
 
+```text
 import math
 
 def forward_kinematics(theta1, theta2, L1, L2):
-    """
+```
+    
+"""
     Calculates the end-effector position of a 2-link planar robotic arm.
 
     theta1, theta2: joint angles in degrees
