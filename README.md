@@ -74,9 +74,23 @@ Demo and results will be added as core functionality is completed.
 
 Coming soon – simulation currently in development
 
-📊 Results
+## 📊 Results
 
-Plots and simulation output will be added here once implementation is complete
+* Plots and simulation output will be added here once implementation is complete.
+The forward kinematics implementation successfully computes the end-effector position for a two-link planar manipulator.
+
+Example test case:
+
+L1 = 1.0m
+L2 = 0.75m
+
+Theta1 = 45°
+Theta2 = 30°
+
+Result:
+
+x = 0.901m
+y = 1.431m
 
 Planned Example Output:
 
