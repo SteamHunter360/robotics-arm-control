@@ -19,7 +19,7 @@ The objective of this project is to build a working, testable robotics simulatio
 
 The figure below illustrates the forward kinematics simulation of a two-link planar robotic arm.
 
-![Robot Arm Visualisation](images/robot_arm_visualisation.png)
+[Robot Arm Visualisation](images/robot_arm_visualisation.png)
 
 The robotic arm is visualised using Matplotlib.
 
