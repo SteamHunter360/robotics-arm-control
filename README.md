@@ -47,9 +47,22 @@ This provides visual verification that the forward kinematics calculations are f
 An interactive version of the robot arm simulation is included in:
 
 ```bash
-interactive_visualisation.py
+python interactive_visualisation.py
+```
+
+This version allows the user to adjust:
+
+- Joint 1 angle (θ1)
+- Joint 2 angle (θ2)
+
+using interactive Matplotlib sliders. As the sliders move, the robot arm updates in real time, allowing visual exploration of how joint angles affect the end-effector position.
 
 ### Planned Future Outputs
+
+- Animated arm motion
+- Trajectory tracking visualisation
+- Joint angle plots
+- End-effector error plots
 
 * Animated arm motion
 * Trajectory tracking visualisation
