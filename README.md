@@ -64,11 +64,6 @@ using interactive Matplotlib sliders. As the sliders move, the robot arm updates
 - Joint angle plots
 - End-effector error plots
 
-* Animated arm motion
-* Trajectory tracking visualisation
-* Joint angle plots
-* End-effector error plots
-
 ---
 
 # ⚙️ Key Features
@@ -183,25 +178,13 @@ Final Position Error
 
 ```text
 robotics-arm-control/
+robotics-arm-control/
 
-│── src/
-│   ├── kinematics.py
-│   ├── controller.py
-│   ├── simulator.py
-│   └── visualisation.py
-│
-│── tests/
-│   └── test_kinematics.py
-│
 │── images/
 │   └── robot_arm_visualisation.png
 │
-│── results/
-│   ├── gifs/
-│   └── plots/
-│
-│── main.py
-│── requirements.txt
+│── visualisation.py
+│── interactive_visualisation.py
 │── README.md
 ```
 
@@ -225,8 +208,6 @@ pip install -r requirements.txt
 Run the simulation:
 
 
-
-````markdown
 Run the forward kinematics visualisation:
 
 ```bash
