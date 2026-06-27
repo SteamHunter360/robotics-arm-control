@@ -42,6 +42,13 @@ This provides visual verification that the forward kinematics calculations are f
 
 ![Robot Arm Visualisation](images/robot_arm_visualisation.png)
 
+## Interactive Slider Visualisation
+
+An interactive version of the robot arm simulation is included in:
+
+```bash
+interactive_visualisation.py
+
 ### Planned Future Outputs
 
 * Animated arm motion
