@@ -215,6 +215,10 @@ Run the simulation:
 ```bash
 python main.py
 ```
+Run the interactive slider visualisation:
+
+```bash
+python interactive_visualisation.py
 
 ---
 
