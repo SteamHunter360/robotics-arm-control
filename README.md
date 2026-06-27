@@ -222,18 +222,22 @@ Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
-
 Run the simulation:
 
+
+
+````markdown
+Run the forward kinematics visualisation:
+
 ```bash
-python main.py
+python visualisation.py
 ```
+
 Run the interactive slider visualisation:
 
 ```bash
 python interactive_visualisation.py
-
----
+```
 
 # 🎯 Expected Behaviour
 
