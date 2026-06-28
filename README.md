@@ -80,8 +80,6 @@ using interactive Matplotlib sliders. As the sliders move, the robot arm updates
 
 ### Features In Development
 
-🔄 Inverse Kinematics Solver
-
 🔄 Trajectory Tracking
 
 🔄 Simulation Environment
@@ -141,6 +139,25 @@ y = 1.431
 
 ---
 
+# 📐 Inverse Kinematics
+
+Inverse kinematics determines the joint angles required for the robot arm to reach a desired target position.
+
+Given a target coordinate:
+
+```text
+(x, y)
+```
+
+the program computes:
+
+- θ1 (Joint 1 Angle)
+- θ2 (Joint 2 Angle)
+
+using the analytical solution for a two-link planar manipulator.
+
+The calculated angles are then used to visualise the robot arm reaching the requested target.
+
 # 📊 Results
 
 The forward kinematics implementation successfully computes the end-effector position for a two-link planar manipulator.
@@ -187,8 +204,8 @@ robotics-arm-control/
 │
 │── visualisation.py
 │── interactive_visualisation.py
+│── inverse_kinematics.py
 │── README.md
-```
 
 ---
 
