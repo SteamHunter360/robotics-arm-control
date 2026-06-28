@@ -76,6 +76,8 @@ using interactive Matplotlib sliders. As the sliders move, the robot arm updates
 
 ✅ Engineering Documentation
 
+✅ Inverse Kinematics Solver
+
 ### Features In Development
 
 🔄 Inverse Kinematics Solver
@@ -218,6 +220,12 @@ Run the interactive slider visualisation:
 
 ```bash
 python interactive_visualisation.py
+```
+
+Run the inverse kinematics solver:
+
+```bash
+python inverse_kinematics.py
 ```
 
 # 🎯 Expected Behaviour
