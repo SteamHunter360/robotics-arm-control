@@ -231,6 +231,7 @@ robotics-arm-control/
 │── interactive_visualisation.py
 │── inverse_kinematics.py
 │── trajectory_planning.py
+|── click_to_move.py
 │── README.md
 ---
 
