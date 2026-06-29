@@ -57,6 +57,23 @@ This version allows the user to adjust:
 
 using interactive Matplotlib sliders. As the sliders move, the robot arm updates in real time, allowing visual exploration of how joint angles affect the end-effector position.
 
+## Trajectory Planning Animation
+
+Run:
+
+```bash
+python trajectory_planning.py
+```
+
+This simulation demonstrates smooth robotic arm motion between two joint configurations.
+
+The animation:
+
+- Interpolates joint angles over time
+- Moves the robot arm smoothly
+- Traces the end-effector path
+- Demonstrates joint-space trajectory planning
+
 ### Planned Future Outputs
 
 - Animated arm motion
@@ -77,6 +94,8 @@ using interactive Matplotlib sliders. As the sliders move, the robot arm updates
 ✅ Engineering Documentation
 
 ✅ Inverse Kinematics Solver
+
+✅ Trajectory Planning Animation
 
 ### Features In Development
 
@@ -197,7 +216,6 @@ Final Position Error
 
 ```text
 robotics-arm-control/
-robotics-arm-control/
 
 │── images/
 │   └── robot_arm_visualisation.png
@@ -205,8 +223,8 @@ robotics-arm-control/
 │── visualisation.py
 │── interactive_visualisation.py
 │── inverse_kinematics.py
+│── trajectory_planning.py
 │── README.md
-
 ---
 
 # 🛠️ Installation & Usage
