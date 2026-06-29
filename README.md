@@ -107,13 +107,20 @@ The animation:
 
 ### Planned Features
 
-🚀 PID Control
+🚀 PID Joint Control
 
 🚀 ROS Integration
 
 🚀 Obstacle Avoidance
 
 🚀 3D Robotic Arm Simulation
+
+🚀 Click-to-Move GUI
+
+🚀 Workspace Visualisation
+
+
+
 
 ---
 
