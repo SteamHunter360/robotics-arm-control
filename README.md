@@ -270,6 +270,14 @@ Run the inverse kinematics solver:
 python inverse_kinematics.py
 ```
 
+## Click-to-Move Simulation
+
+Run:
+
+```bash
+python click_to_move.py
+```
+
 # 🎯 Expected Behaviour
 
 When complete:
