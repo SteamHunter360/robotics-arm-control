@@ -1,6 +1,7 @@
 import pytest
 from src.forward_kinematics import forward_kinematics
 from src.inverse_kinematics import inverse_kinematics
+from src.trajectory_planning import generate_joint_trajectory
 
 def test_forward_kinematics_zero_angles():
     points = forward_kinematics(0, 0)
@@ -59,3 +60,15 @@ def test_inverse_kinematics_reaches_target():
 def test_inverse_kinematics_rejects_unreachable_target():
     with pytest.raises(ValueError):
         inverse_kinematics(3.0, 0.0)
+
+def test_generate_joint_trajectory_start_and_end_values():
+    trajectory = generate_joint_trajectory(20, 80, 100)
+
+    assert trajectory[0] == pytest.approx(20)
+    assert trajectory[-1] == pytest.approx(80)
+
+
+def test_generate_joint_trajectory_number_of_frames():
+    trajectory = generate_joint_trajectory(20, 80, 100)
+
+    assert len(trajectory) == 100
