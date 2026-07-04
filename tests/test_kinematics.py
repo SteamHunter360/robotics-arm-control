@@ -129,3 +129,8 @@ def test_calculate_position_error_known_distance():
     error = calculate_position_error(3, 4, 0, 0)
 
     assert error == pytest.approx(5.0)
+
+    
+def test_generate_joint_trajectory_rejects_invalid_frames():
+    with pytest.raises(ValueError):
+        generate_joint_trajectory(20, 80, 1)
