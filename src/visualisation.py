@@ -1,7 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 
-from forward_kinematics import forward_kinematics
+from src.forward_kinematics import forward_kinematics
 
 
 def plot_robot_arm(theta1_deg=45, theta2_deg=30, L1=1.0, L2=0.75):

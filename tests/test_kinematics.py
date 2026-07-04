@@ -1,6 +1,6 @@
 import pytest
 from src.forward_kinematics import forward_kinematics
-
+from src.inverse_kinematics import inverse_kinematics
 
 def test_forward_kinematics_zero_angles():
     points = forward_kinematics(0, 0)
@@ -41,3 +41,21 @@ def test_forward_kinematics_known_position():
 
     assert x == pytest.approx(0.901221, abs=1e-6)
     assert y == pytest.approx(1.431551, abs=1e-6)
+
+def test_inverse_kinematics_reaches_target():
+    target_x = 0.9
+    target_y = 1.2
+
+    theta1, theta2 = inverse_kinematics(target_x, target_y)
+
+    points = forward_kinematics(theta1, theta2)
+
+    x, y = points["end_effector"]
+
+    assert x == pytest.approx(target_x, abs=1e-6)
+    assert y == pytest.approx(target_y, abs=1e-6)
+
+
+def test_inverse_kinematics_rejects_unreachable_target():
+    with pytest.raises(ValueError):
+        inverse_kinematics(3.0, 0.0)
