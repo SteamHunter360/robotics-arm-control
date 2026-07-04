@@ -1,11 +1,14 @@
+import math
 import pytest
+
 from src.forward_kinematics import forward_kinematics
 from src.inverse_kinematics import inverse_kinematics
 from src.trajectory_planning import generate_joint_trajectory
+from src.metrics import calculate_position_error
+
 
 def test_forward_kinematics_zero_angles():
     points = forward_kinematics(0, 0)
-
     x, y = points["end_effector"]
 
     assert x == pytest.approx(1.75)
@@ -14,7 +17,6 @@ def test_forward_kinematics_zero_angles():
 
 def test_forward_kinematics_vertical_arm():
     points = forward_kinematics(90, 0)
-
     x, y = points["end_effector"]
 
     assert x == pytest.approx(0.0, abs=1e-9)
@@ -23,7 +25,6 @@ def test_forward_kinematics_vertical_arm():
 
 def test_forward_kinematics_folded_arm():
     points = forward_kinematics(0, 180)
-
     x, y = points["end_effector"]
 
     assert x == pytest.approx(0.25)
@@ -43,12 +44,12 @@ def test_forward_kinematics_known_position():
     assert x == pytest.approx(0.901221, abs=1e-6)
     assert y == pytest.approx(1.431551, abs=1e-6)
 
+
 def test_inverse_kinematics_reaches_target():
     target_x = 0.9
     target_y = 1.2
 
     theta1, theta2 = inverse_kinematics(target_x, target_y)
-
     points = forward_kinematics(theta1, theta2)
 
     x, y = points["end_effector"]
@@ -60,6 +61,7 @@ def test_inverse_kinematics_reaches_target():
 def test_inverse_kinematics_rejects_unreachable_target():
     with pytest.raises(ValueError):
         inverse_kinematics(3.0, 0.0)
+
 
 def test_generate_joint_trajectory_start_and_end_values():
     trajectory = generate_joint_trajectory(20, 80, 100)
@@ -73,25 +75,16 @@ def test_generate_joint_trajectory_number_of_frames():
 
     assert len(trajectory) == 100
 
-import math
-
 
 def test_integrated_ik_trajectory_fk_pipeline():
-    # Define a reachable Cartesian target
     target_x = 0.9
     target_y = 1.2
 
-    # Starting joint configuration
     start_theta1 = 20
     start_theta2 = 20
 
-    # Calculate target joint angles using inverse kinematics
-    target_theta1, target_theta2 = inverse_kinematics(
-        target_x,
-        target_y,
-    )
+    target_theta1, target_theta2 = inverse_kinematics(target_x, target_y)
 
-    # Generate joint-space trajectories
     theta1_trajectory = generate_joint_trajectory(
         start_theta1,
         target_theta1,
@@ -104,16 +97,13 @@ def test_integrated_ik_trajectory_fk_pipeline():
         100,
     )
 
-    # Verify every trajectory point remains finite
     for theta1, theta2 in zip(theta1_trajectory, theta2_trajectory):
         points = forward_kinematics(theta1, theta2)
-
         x, y = points["end_effector"]
 
         assert math.isfinite(x)
         assert math.isfinite(y)
 
-    # Validate final position using forward kinematics
     final_points = forward_kinematics(
         theta1_trajectory[-1],
         theta2_trajectory[-1],
@@ -121,10 +111,21 @@ def test_integrated_ik_trajectory_fk_pipeline():
 
     final_x, final_y = final_points["end_effector"]
 
-    # Calculate Cartesian final position error
     final_error = math.hypot(
         final_x - target_x,
         final_y - target_y,
     )
 
     assert final_error < 1e-6
+
+
+def test_calculate_position_error_zero_error():
+    error = calculate_position_error(0.9, 1.2, 0.9, 1.2)
+
+    assert error == pytest.approx(0.0)
+
+
+def test_calculate_position_error_known_distance():
+    error = calculate_position_error(3, 4, 0, 0)
+
+    assert error == pytest.approx(5.0)

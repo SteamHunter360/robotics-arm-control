@@ -1,6 +1,9 @@
 from src.inverse_kinematics import inverse_kinematics
 from src.forward_kinematics import forward_kinematics
-from src.trajectory_planning import generate_joint_trajectory
+from src.trajectory_planning import (
+    generate_joint_trajectory,
+    animate_joint_trajectory,
+)
 
 
 def main():
@@ -11,17 +14,41 @@ def main():
     start_theta2 = 20
     frames = 100
 
-    target_theta1, target_theta2 = inverse_kinematics(target_x, target_y)
+    target_theta1, target_theta2 = inverse_kinematics(
+        target_x,
+        target_y,
+    )
 
-    theta1_path = generate_joint_trajectory(start_theta1, target_theta1, frames)
-    theta2_path = generate_joint_trajectory(start_theta2, target_theta2, frames)
+    theta1_path = generate_joint_trajectory(
+        start_theta1,
+        target_theta1,
+        frames,
+    )
 
-    final_points = forward_kinematics(theta1_path[-1], theta2_path[-1])
+    theta2_path = generate_joint_trajectory(
+        start_theta2,
+        target_theta2,
+        frames,
+    )
+
+    final_points = forward_kinematics(
+        theta1_path[-1],
+        theta2_path[-1],
+    )
+
     final_x, final_y = final_points["end_effector"]
 
     error_x = final_x - target_x
     error_y = final_y - target_y
-    final_error = (error_x**2 + error_y**2) ** 0.5
+   
+   from src.metrics import calculate_position_error
+
+final_error = calculate_position_error(
+    final_x,
+    final_y,
+    target_x,
+    target_y,
+)
 
     print("\nTarget reached calculation complete.")
     print(f"Target position: ({target_x:.3f}, {target_y:.3f})")
@@ -29,6 +56,9 @@ def main():
     print(f"Theta1 target: {target_theta1:.2f}°")
     print(f"Theta2 target: {target_theta2:.2f}°")
     print(f"Final position error: {final_error:.6f} m")
+
+    # Display the trajectory animation
+    animate_joint_trajectory(theta1_path, theta2_path)
 
 
 if __name__ == "__main__":
