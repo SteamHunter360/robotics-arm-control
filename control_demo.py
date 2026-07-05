@@ -35,11 +35,12 @@ def main():
         print("Settling time: Not settled within simulation duration")
 
     plot_control_response(
-        time_values,
-        angle_values,
-        control_values,
-        target_angle,
-    )
+    time_values,
+    angle_values,
+    control_values,
+    target_angle,
+    save_path="images/closed_loop_response.png",
+)
 
 
 if __name__ == "__main__":

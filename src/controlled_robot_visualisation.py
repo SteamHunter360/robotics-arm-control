@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation, PillowWriter
 
 
 def animate_desired_vs_actual_paths(
     desired_path,
     actual_path,
     interval=50,
+    save_path=None,
 ):
     if len(desired_path) != len(actual_path):
         raise ValueError("Desired and actual paths must have the same length.")
@@ -55,6 +56,12 @@ def animate_desired_vs_actual_paths(
         blit=False,
         repeat=False,
     )
+
+    if save_path is not None:
+        animation.save(
+            save_path,
+            writer=PillowWriter(fps=20),
+        )
 
     plt.show()
 

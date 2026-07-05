@@ -6,6 +6,7 @@ from src.cartesian_analysis import (
     analyse_cartesian_tracking,
 )
 from src.controlled_robot_visualisation import animate_desired_vs_actual_paths
+from src.cartesian_visualisation import plot_cartesian_tracking_error
 
 
 def main():
@@ -45,8 +46,20 @@ def main():
     print(f"RMS Cartesian error: {cartesian_results['rms_error']:.6f} m")
     print(f"Desired path length: {cartesian_results['desired_path_length']:.6f} m")
     print(f"Actual path length: {cartesian_results['actual_path_length']:.6f} m")
+    print(f"Desired max step: {cartesian_results['desired_max_step']:.6f} m")
+    print(f"Actual max step: {cartesian_results['actual_max_step']:.6f} m")
 
-    animate_desired_vs_actual_paths(desired_path, actual_path)
+    plot_cartesian_tracking_error(
+        desired_path,
+        actual_path,
+        save_path="images/cartesian_tracking_error.png",
+    )
+
+    animate_desired_vs_actual_paths(
+      desired_path,
+      actual_path,
+    save_path="images/controlled_robot_tracking.gif",
+)
 
 
 if __name__ == "__main__":

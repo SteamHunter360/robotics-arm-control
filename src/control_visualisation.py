@@ -6,78 +6,62 @@ def plot_control_response(
     angle_values,
     control_values,
     target_angle,
+    save_path=None,
 ):
     """
-    Plot closed-loop control-system performance.
+    Plot the closed-loop joint response and control input.
 
-    Generates three separate figures:
-    1. Desired vs actual joint angle.
-    2. Tracking error over time.
-    3. Control effort over time.
+    Args:
+        time_values: Simulation time samples.
+        angle_values: Actual joint-angle samples.
+        control_values: Controller output samples.
+        target_angle: Desired joint angle.
+        save_path: Optional path used to save the generated figure.
     """
 
-    tracking_errors = [
-        target_angle - actual_angle
-        for actual_angle in angle_values
-    ]
+    fig, angle_ax = plt.subplots(figsize=(9, 6))
 
-    # Desired vs actual response
-    plt.figure(figsize=(8, 5))
-
-    plt.plot(
+    angle_ax.plot(
         time_values,
         angle_values,
-        label="Actual Angle",
+        linewidth=2,
+        label="Actual Joint Angle",
     )
 
-    plt.axhline(
-        y=target_angle,
+    angle_ax.axhline(
+        target_angle,
         linestyle="--",
-        label="Desired Angle",
+        linewidth=2,
+        label="Target Joint Angle",
     )
 
-    plt.xlabel("Time (s)")
-    plt.ylabel("Joint Angle (degrees)")
-    plt.title("Closed-Loop Joint Position Response")
-    plt.grid(True)
-    plt.legend()
-    plt.tight_layout()
+    angle_ax.set_xlabel("Time (s)")
+    angle_ax.set_ylabel("Joint Angle (degrees)")
+    angle_ax.set_title("Closed-Loop PID Joint Position Control")
+    angle_ax.grid(True)
+    angle_ax.legend(loc="upper left")
 
-    # Tracking error
-    plt.figure(figsize=(8, 5))
+    control_ax = angle_ax.twinx()
 
-    plt.plot(
-        time_values,
-        tracking_errors,
-        label="Tracking Error",
-    )
-
-    plt.axhline(
-        y=0.0,
-        linestyle="--",
-    )
-
-    plt.xlabel("Time (s)")
-    plt.ylabel("Tracking Error (degrees)")
-    plt.title("Joint Tracking Error")
-    plt.grid(True)
-    plt.legend()
-    plt.tight_layout()
-
-    # Control effort
-    plt.figure(figsize=(8, 5))
-
-    plt.plot(
+    control_ax.plot(
         time_values,
         control_values,
+        linewidth=1.5,
+        alpha=0.7,
         label="Control Input",
     )
 
-    plt.xlabel("Time (s)")
-    plt.ylabel("Control Input / Torque")
-    plt.title("PID Control Effort")
-    plt.grid(True)
-    plt.legend()
-    plt.tight_layout()
+    control_ax.set_ylabel("Control Input")
+
+    fig.tight_layout()
+
+    if save_path is not None:
+        fig.savefig(
+            save_path,
+            dpi=300,
+            bbox_inches="tight",
+        )
 
     plt.show()
+
+    return fig
