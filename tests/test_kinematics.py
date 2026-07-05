@@ -4,7 +4,11 @@ import pytest
 from src.forward_kinematics import forward_kinematics
 from src.inverse_kinematics import inverse_kinematics
 from src.trajectory_planning import generate_joint_trajectory
-from src.metrics import calculate_position_error
+from src.metrics import (
+    calculate_position_error,
+    calculate_path_length,
+    calculate_max_step_distance,
+)
 
 
 def test_forward_kinematics_zero_angles():
@@ -134,3 +138,25 @@ def test_calculate_position_error_known_distance():
 def test_generate_joint_trajectory_rejects_invalid_frames():
     with pytest.raises(ValueError):
         generate_joint_trajectory(20, 80, 1)
+
+def test_calculate_path_length_known_path():
+    points = [
+        (0, 0),
+        (3, 4),
+        (6, 8),
+    ]
+
+    path_length = calculate_path_length(points)
+
+    assert path_length == pytest.approx(10.0)
+
+def test_calculate_max_step_distance_known_path():
+    points = [
+        (0, 0),
+        (3, 4),
+        (9, 12),
+    ]
+
+    max_step_distance = calculate_max_step_distance(points)
+
+    assert max_step_distance == pytest.approx(10.0)
