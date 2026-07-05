@@ -10,6 +10,7 @@ from src.metrics import (
     calculate_max_step_distance,
 )
 from src.pid_controller import PIDController
+from src.joint_simulation import JointSimulation
 
 
 def test_forward_kinematics_zero_angles():
@@ -224,3 +225,36 @@ def test_pid_controller_reset():
 
     assert controller.integral == pytest.approx(0.0)
     assert controller.previous_error == pytest.approx(0.0)
+
+def test_joint_simulation_positive_torque_increases_angle():
+    joint = JointSimulation(
+        initial_angle=0.0,
+        initial_velocity=0.0,
+        inertia=1.0,
+        damping=0.0,
+        dt=0.1,
+    )
+
+    angle = joint.update(control_input=1.0)
+
+    assert angle > 0.0
+
+
+def test_joint_simulation_zero_input_stays_at_rest():
+    joint = JointSimulation(
+        initial_angle=0.0,
+        initial_velocity=0.0,
+        inertia=1.0,
+        damping=1.0,
+        dt=0.1,
+    )
+
+    angle = joint.update(control_input=0.0)
+
+    assert angle == pytest.approx(0.0)
+    assert joint.velocity == pytest.approx(0.0)
+
+
+def test_joint_simulation_rejects_invalid_inertia():
+    with pytest.raises(ValueError):
+        JointSimulation(inertia=0.0)
