@@ -7,7 +7,8 @@ from src.trajectory_planning import generate_joint_trajectory
 from src.metrics import (
     calculate_position_error,
     calculate_path_length,
-    calculate_max_step_distance,
+    calculate_max_step_distance, 
+    calculate_rms_error
 )
 from src.pid_controller import PIDController
 from src.joint_simulation import JointSimulation
@@ -276,3 +277,11 @@ def test_closed_loop_joint_converges_toward_target():
     assert final_error < 5.0
     assert len(time_values) == len(angle_values)
     assert len(angle_values) == len(control_values)
+
+def test_calculate_rms_error_known_values():
+    actual_values = [1, 2, 3]
+    target_value = 2
+
+    rms_error = calculate_rms_error(actual_values, target_value)
+
+    assert rms_error == pytest.approx((2 / 3) ** 0.5)

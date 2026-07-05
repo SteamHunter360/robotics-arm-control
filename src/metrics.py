@@ -72,3 +72,19 @@ def calculate_max_step_distance(points):
         max_distance = max(max_distance, step_distance)
 
     return max_distance
+
+def calculate_rms_error(actual_values, target_value):
+    """
+    Calculate RMS error between actual values and a constant target.
+    """
+    if len(actual_values) == 0:
+        return 0.0
+
+    squared_errors = [
+        (actual - target_value) ** 2
+        for actual in actual_values
+    ]
+
+    mean_squared_error = sum(squared_errors) / len(squared_errors)
+
+    return math.sqrt(mean_squared_error)
