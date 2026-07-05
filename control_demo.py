@@ -15,23 +15,24 @@ def main():
         )
     )
 
-   results = analyse_closed_loop_response(
-    time_values,
-    angle_values,
-    target_angle,
-)
-
-print(f"Overshoot: {results['overshoot']:.6f} degrees")
-
-if results["settling_time"] is None:
-    print("Settling time: Did not settle within simulation duration")
-else:
-    print(f"Settling time: {results['settling_time']:.3f} s")
+    results = analyse_closed_loop_response(
+        time_values,
+        angle_values,
+        target_angle,
+    )
 
     print("\nClosed-Loop Control Results")
+    print(f"Target angle: {target_angle:.2f} degrees")
+    print(f"Final angle: {angle_values[-1]:.6f} degrees")
     print(f"Final error: {results['final_error']:.6f} degrees")
-    print(f"RMS error: {results['rms_error']:.6f} degrees")
-    print(f"Maximum error: {results['max_error']:.6f} degrees")
+    print(f"RMS tracking error: {results['rms_error']:.6f} degrees")
+    print(f"Maximum tracking error: {results['max_error']:.6f} degrees")
+    print(f"Overshoot: {results['overshoot']:.6f} degrees")
+
+    if results["settling_time"] is not None:
+        print(f"Settling time: {results['settling_time']:.6f} seconds")
+    else:
+        print("Settling time: Not settled within simulation duration")
 
     plot_control_response(
         time_values,

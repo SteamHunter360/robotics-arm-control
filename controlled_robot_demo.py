@@ -14,7 +14,7 @@ def main():
 
     start_theta1 = 20.0
     start_theta2 = 20.0
-    frames = 100
+    frames = 300
 
     target_theta1, target_theta2 = inverse_kinematics(target_x, target_y)
 
