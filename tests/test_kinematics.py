@@ -7,8 +7,9 @@ from src.trajectory_planning import generate_joint_trajectory
 from src.metrics import (
     calculate_position_error,
     calculate_path_length,
-    calculate_max_step_distance, 
-    calculate_rms_error
+    calculate_max_step_distance,
+    calculate_rms_error,
+    calculate_max_tracking_error,
 )
 from src.pid_controller import PIDController
 from src.joint_simulation import JointSimulation
@@ -285,3 +286,14 @@ def test_calculate_rms_error_known_values():
     rms_error = calculate_rms_error(actual_values, target_value)
 
     assert rms_error == pytest.approx((2 / 3) ** 0.5)
+
+def test_calculate_max_tracking_error_known_values():
+    actual_values = [1, 2, 3]
+    target_value = 2
+
+    max_error = calculate_max_tracking_error(
+        actual_values,
+        target_value,
+    )
+
+    assert max_error == pytest.approx(1.0)

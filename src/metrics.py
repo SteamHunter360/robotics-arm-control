@@ -88,3 +88,16 @@ def calculate_rms_error(actual_values, target_value):
     mean_squared_error = sum(squared_errors) / len(squared_errors)
 
     return math.sqrt(mean_squared_error)
+
+def calculate_max_tracking_error(actual_values, target_value):
+    """
+    Calculate the maximum absolute tracking error relative
+    to a constant target value.
+    """
+    if len(actual_values) == 0:
+        return 0.0
+
+    return max(
+        abs(actual - target_value)
+        for actual in actual_values
+    )
