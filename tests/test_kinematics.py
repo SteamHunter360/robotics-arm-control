@@ -9,6 +9,7 @@ from src.metrics import (
     calculate_path_length,
     calculate_max_step_distance,
 )
+from src.pid_controller import PIDController
 
 
 def test_forward_kinematics_zero_angles():
@@ -160,3 +161,19 @@ def test_calculate_max_step_distance_known_path():
     max_step_distance = calculate_max_step_distance(points)
 
     assert max_step_distance == pytest.approx(10.0)
+
+
+def test_pid_controller_generates_positive_output_for_positive_error():
+    controller = PIDController(
+        kp=2.0,
+        ki=0.0,
+        kd=0.0,
+        dt=0.1,
+    )
+
+    output = controller.update(
+        setpoint=10.0,
+        measurement=8.0,
+    )
+
+    assert output == pytest.approx(4.0)

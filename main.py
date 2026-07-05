@@ -1,8 +1,13 @@
-from src.inverse_kinematics import inverse_kinematics
 from src.forward_kinematics import forward_kinematics
+from src.inverse_kinematics import inverse_kinematics
 from src.trajectory_planning import (
     generate_joint_trajectory,
     animate_joint_trajectory,
+)
+from src.metrics import (
+    calculate_position_error,
+    calculate_path_length,
+    calculate_max_step_distance,
 )
 
 
@@ -31,24 +36,24 @@ def main():
         frames,
     )
 
-    final_points = forward_kinematics(
-        theta1_path[-1],
-        theta2_path[-1],
+    end_effector_path = []
+
+    for theta1, theta2 in zip(theta1_path, theta2_path):
+        points = forward_kinematics(theta1, theta2)
+        end_effector_path.append(points["end_effector"])
+
+    final_x, final_y = end_effector_path[-1]
+
+    final_error = calculate_position_error(
+        final_x,
+        final_y,
+        target_x,
+        target_y,
     )
 
-    final_x, final_y = final_points["end_effector"]
+    path_length = calculate_path_length(end_effector_path)
 
-    error_x = final_x - target_x
-    error_y = final_y - target_y
-   
-   from src.metrics import calculate_position_error
-
-final_error = calculate_position_error(
-    final_x,
-    final_y,
-    target_x,
-    target_y,
-)
+    max_step_distance = calculate_max_step_distance(end_effector_path)
 
     print("\nTarget reached calculation complete.")
     print(f"Target position: ({target_x:.3f}, {target_y:.3f})")
@@ -56,8 +61,9 @@ final_error = calculate_position_error(
     print(f"Theta1 target: {target_theta1:.2f}°")
     print(f"Theta2 target: {target_theta2:.2f}°")
     print(f"Final position error: {final_error:.6f} m")
+    print(f"Total path length: {path_length:.6f} m")
+    print(f"Maximum step distance: {max_step_distance:.6f} m")
 
-    # Display the trajectory animation
     animate_joint_trajectory(theta1_path, theta2_path)
 
 
