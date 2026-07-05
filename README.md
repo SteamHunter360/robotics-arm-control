@@ -1,360 +1,676 @@
 # 🤖 Robotics Arm Control
 
-A Python-based robotics project demonstrating:
+[![Tests](https://github.com/SteamHunter360/robotics-arm-control/actions/workflows/tests.yml/badge.svg)](https://github.com/SteamHunter360/robotics-arm-control/actions/workflows/tests.yml)
 
-* Forward Kinematics
-* Inverse Kinematics
-* Trajectory Planning
-* Robotic Arm Visualisation
+A Python robotics and control-systems project implementing the modelling, motion planning, closed-loop control, simulation, validation, and quantitative performance analysis of a two-link planar robotic manipulator.
 
-for a planar robotic manipulator.
+The project integrates:
 
-The objective of this project is to build a working, testable robotics simulation while developing practical skills in robotics, automation, control systems, and engineering software development.
+- Forward kinematics
+- Analytical inverse kinematics
+- Joint-space trajectory generation
+- PID joint-position control
+- Simulated joint dynamics
+- Single-joint closed-loop analysis
+- Quantitative PID tuning comparison
+- Two-joint closed-loop control
+- Two-joint trajectory tracking
+- Cartesian end-effector tracking analysis
+- Desired-vs-actual motion visualisation
+- Automated testing
+- Continuous integration with GitHub Actions
+
+The objective is to demonstrate an end-to-end robotics engineering workflow rather than isolated mathematical examples.
 
 ---
 
-# 🚀 Demo
+## 🎥 Demonstration
 
-## Robot Arm Visualisation
+The primary application accepts a Cartesian target position and executes the complete controlled-robot pipeline:
 
-The figure below illustrates the forward kinematics simulation of a two-link planar robotic arm.
+```text
+Cartesian Target Position
+          ↓
+    Inverse Kinematics
+          ↓
+ Desired Joint Trajectories
+          ↓
+   Two PID Controllers
+          ↓
+ Two Simulated Joint Plants
+          ↓
+  Actual Joint Trajectories
+          ↓
+    Forward Kinematics
+          ↓
+ Actual End-Effector Path
+          ↓
+ Quantitative Tracking Analysis
+          ↓
+ Desired vs Actual Visualisation
+```
 
-[Robot Arm Visualisation](images/robot_arm_visualisation.png)
+Run the primary application:
 
-The robotic arm is visualised using Matplotlib.
+```bash
+python main.py
+```
 
-Given:
+Example target:
 
-* Joint Angles
-* Link Lengths
+```text
+X = 0.9
+Y = 1.2
+```
 
-the simulation calculates:
+The application:
 
-* Joint 1 Position
-* Joint 2 Position
-* End-Effector Position
+1. Calculates the target joint configuration using inverse kinematics.
+2. Generates desired trajectories for both joints.
+3. Simulates two independent PID-controlled joints.
+4. Records the actual joint trajectories and control inputs.
+5. Converts desired and actual joint trajectories into Cartesian end-effector paths.
+6. Calculates quantitative Cartesian tracking metrics.
+7. Displays the desired-vs-actual end-effector motion.
 
-and displays the robotic arm configuration graphically.
+---
 
-This provides visual verification that the forward kinematics calculations are functioning correctly.
+## 📸 Visual Evidence
 
-### Example Output
+### Forward Kinematics Visualisation
 
 ![Robot Arm Visualisation](images/robot_arm_visualisation.png)
 
-## Interactive Slider Visualisation
+The visualisation provides graphical verification of the two-link forward kinematics implementation.
 
-An interactive version of the robot arm simulation is included in:
+### Controlled Robot Tracking
+
+Add the final desired-vs-actual controlled-motion GIF here:
+
+```markdown
+![Controlled Robot Tracking](images/controlled_robot_tracking.gif)
+```
+
+### Control Response
+
+Add the final closed-loop response plot here:
+
+```markdown
+![Closed-Loop Response](images/closed_loop_response.png)
+```
+
+### Cartesian Tracking Error
+
+Add the final Cartesian tracking-error plot here:
+
+```markdown
+![Cartesian Tracking Error](images/cartesian_tracking_error.png)
+```
+
+---
+
+## ⚙️ Key Features
+
+### Robotics Modelling
+
+- Forward kinematics for a two-link planar manipulator
+- Analytical inverse kinematics
+- Workspace visualisation
+- Interactive joint-angle visualisation
+- Click-to-move inverse-kinematics demonstration
+
+### Motion Planning
+
+- Joint-space trajectory generation
+- Smooth interpolation between joint configurations
+- End-effector path generation
+- Path length analysis
+- Maximum step-distance analysis
+
+### Control Systems
+
+- Reusable PID controller implementation
+- Output saturation
+- Simulated second-order joint dynamics
+- Single-joint closed-loop position control
+- Two-joint closed-loop position control
+- Time-varying joint trajectory tracking
+
+### Quantitative Control Analysis
+
+The project calculates:
+
+- Final tracking error
+- RMS tracking error
+- Maximum tracking error
+- Overshoot
+- Settling time
+- RMS control effort
+- Cartesian final position error
+- Cartesian maximum tracking error
+- Cartesian RMS tracking error
+- Desired and actual path lengths
+- Maximum Cartesian step distance
+
+### PID Tuning Comparison
+
+Multiple PID configurations can be simulated under identical plant and target conditions.
+
+The comparison evaluates trade-offs between:
+
+- Tracking accuracy
+- Overshoot
+- Settling time
+- Control effort
+
+This allows controller selection to be based on quantitative performance rather than visual inspection alone.
+
+### Software Engineering
+
+- Modular `src/` package structure
+- Separated test modules
+- 39 automated tests
+- Input and edge-case validation
+- Reusable simulation and analysis functions
+- Dependency management through `requirements.txt`
+- Generated-file exclusion through `.gitignore`
+- Continuous integration using GitHub Actions
+
+---
+
+## 🧠 System Architecture
+
+```text
+                         ┌─────────────────────┐
+                         │ Cartesian Target    │
+                         │      (x, y)         │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ Inverse Kinematics  │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ Joint Trajectory    │
+                         │     Generation      │
+                         └──────────┬──────────┘
+                                    │
+                     ┌──────────────┴──────────────┐
+                     ▼                             ▼
+              ┌─────────────┐               ┌─────────────┐
+              │ PID Joint 1 │               │ PID Joint 2 │
+              └──────┬──────┘               └──────┬──────┘
+                     │                             │
+                     ▼                             ▼
+              ┌─────────────┐               ┌─────────────┐
+              │ Joint Plant │               │ Joint Plant │
+              │      1      │               │      2      │
+              └──────┬──────┘               └──────┬──────┘
+                     │                             │
+                     └──────────────┬──────────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ Forward Kinematics  │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ Actual Cartesian    │
+                         │        Path         │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ Tracking Analysis   │
+                         │  + Visualisation    │
+                         └─────────────────────┘
+```
+
+---
+
+## 📐 Forward Kinematics
+
+For a two-link planar manipulator:
+
+```text
+x = L1 cos(θ1) + L2 cos(θ1 + θ2)
+
+y = L1 sin(θ1) + L2 sin(θ1 + θ2)
+```
+
+where:
+
+- `L1`, `L2` are link lengths.
+- `θ1`, `θ2` are joint angles.
+- `x`, `y` are the Cartesian end-effector coordinates.
+
+Example:
+
+```text
+L1 = 1.0 m
+L2 = 0.75 m
+
+θ1 = 45°
+θ2 = 30°
+```
+
+Result:
+
+```text
+x ≈ 0.901 m
+y ≈ 1.432 m
+```
+
+---
+
+## 📐 Inverse Kinematics
+
+The analytical inverse-kinematics solver calculates the joint angles required to reach a requested Cartesian target.
+
+The solver:
+
+- Calculates whether the target lies inside the robot workspace.
+- Rejects unreachable targets.
+- Calculates the required joint angles.
+- Validates the solution through forward kinematics.
+
+---
+
+## 🎛️ Closed-Loop Joint Control
+
+Each simulated robot joint is controlled by a PID controller.
+
+The controller receives:
+
+```text
+Desired Joint Angle
+        ↓
+      Error
+        ↓
+  PID Controller
+        ↓
+  Control Input
+        ↓
+ Simulated Joint
+        ↓
+ Actual Joint Angle
+        └──────── Feedback ────────┘
+```
+
+The simulated plant includes:
+
+- Joint inertia
+- Viscous damping
+- Angular position
+- Angular velocity
+- Discrete-time numerical integration
+
+This allows controller performance to be evaluated under dynamic conditions.
+
+---
+
+## 📈 Quantitative Results
+
+### Single-Joint Closed-Loop Control
+
+Results from:
 
 ```bash
-python interactive_visualisation.py
+python control_demo.py
 ```
 
-This version allows the user to adjust:
+| Metric | Result |
+|---|---:|
+| Final Error | ADD ACTUAL RESULT |
+| RMS Tracking Error | ADD ACTUAL RESULT |
+| Maximum Tracking Error | ADD ACTUAL RESULT |
+| Overshoot | ADD ACTUAL RESULT |
+| Settling Time | ADD ACTUAL RESULT |
 
-- Joint 1 angle (θ1)
-- Joint 2 angle (θ2)
+### PID Tuning Comparison
 
-using interactive Matplotlib sliders. As the sliders move, the robot arm updates in real time, allowing visual exploration of how joint angles affect the end-effector position.
-
-## Trajectory Planning Animation
-
-Run:
+Results from:
 
 ```bash
-python trajectory_planning.py
+python pid_tuning_demo.py
 ```
 
-This simulation demonstrates smooth robotic arm motion between two joint configurations.
+| Controller | Kp | Ki | Kd | Final Error | RMS Error | Overshoot | Settling Time | RMS Control Effort |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Conservative | 15 | 0 | 4 | ADD | ADD | ADD | ADD | ADD |
+| Balanced | 30 | 0 | 5 | ADD | ADD | ADD | ADD | ADD |
+| Aggressive | 60 | 0 | 6 | ADD | ADD | ADD | ADD | ADD |
 
-The animation:
+### Two-Joint Cartesian Tracking
 
-- Interpolates joint angles over time
-- Moves the robot arm smoothly
-- Traces the end-effector path
-- Demonstrates joint-space trajectory planning
+Results from:
 
-### Planned Future Outputs
+```bash
+python controlled_robot_demo.py
+```
 
-- Animated arm motion
-- Trajectory tracking visualisation
-- Joint angle plots
-- End-effector error plots
+Example target:
+
+```text
+(0.9 m, 1.2 m)
+```
+
+| Metric | Result |
+|---|---:|
+| Final Cartesian Error | ADD ACTUAL RESULT |
+| Maximum Cartesian Error | ADD ACTUAL RESULT |
+| RMS Cartesian Error | ADD ACTUAL RESULT |
+| Desired Path Length | ADD ACTUAL RESULT |
+| Actual Path Length | ADD ACTUAL RESULT |
+
+### Engineering Interpretation
+
+The final results should be interpreted in terms of engineering trade-offs.
+
+A more aggressive controller may reduce tracking error or response time while increasing control effort or overshoot.
+
+A more conservative controller may require less control effort but track the desired trajectory more slowly.
+
+The selected controller should therefore be justified using quantitative evidence rather than a single performance metric.
 
 ---
 
-# ⚙️ Key Features
-
-### Current Features
-
-✅ Forward Kinematics Implementation
-
-✅ End-Effector Position Calculation
-
-✅ Engineering Documentation
-
-✅ Inverse Kinematics Solver
-
-✅ Trajectory Planning Animation
-
-### Features In Development
-
-🔄 Trajectory Tracking
-
-🔄 Simulation Environment
-
-🔄 Matplotlib Visualisation
-
-### Planned Features
-
-🚀 PID Joint Control
-
-🚀 ROS Integration
-
-🚀 Obstacle Avoidance
-
-🚀 3D Robotic Arm Simulation
-
-🚀 Click-to-Move GUI
-
-🚀 Workspace Visualisation
-
-
-
-
----
-
-# 📐 Forward Kinematics
-
-Forward kinematics calculates the position of the robot arm's end effector from the known joint angles and link lengths.
-
-For a two-link planar robotic arm:
-
-```text
-x = L1 cos(theta1) + L2 cos(theta1 + theta2)
-
-y = L1 sin(theta1) + L2 sin(theta1 + theta2)
-```
-
-Where:
-
-* L1 = Length of Link 1
-* L2 = Length of Link 2
-* theta1 = Joint 1 Angle
-* theta2 = Joint 2 Angle
-* x, y = End-Effector Position
-
-### Example Input
-
-```text
-L1 = 1.0
-L2 = 0.75
-
-theta1 = 45°
-theta2 = 30°
-```
-
-### Example Output
-
-```text
-End-effector position:
-
-x = 0.901
-y = 1.431
-```
-
----
-
-# 📐 Inverse Kinematics
-
-Inverse kinematics determines the joint angles required for the robot arm to reach a desired target position.
-
-Given a target coordinate:
-
-```text
-(x, y)
-```
-
-the program computes:
-
-- θ1 (Joint 1 Angle)
-- θ2 (Joint 2 Angle)
-
-using the analytical solution for a two-link planar manipulator.
-
-The calculated angles are then used to visualise the robot arm reaching the requested target.
-
-# 📊 Results
-
-The forward kinematics implementation successfully computes the end-effector position for a two-link planar manipulator.
-
-### Test Case
-
-```text
-L1 = 1.0m
-L2 = 0.75m
-
-theta1 = 45°
-theta2 = 30°
-```
-
-### Result
-
-```text
-x = 0.901m
-y = 1.431m
-```
-
-### Planned Future Results
-
-```text
-Target Position: (0.5, 0.3)
-
-Computed Joint Angles
-
-End-Effector Trajectory Plot
-
-Final Position Error
-```
-
----
-
-# 📁 Project Structure
+## 📁 Project Structure
 
 ```text
 robotics-arm-control/
-
-│── images/
+│
+├── .github/
+│   └── workflows/
+│       └── tests.yml
+│
+├── images/
 │   └── robot_arm_visualisation.png
 │
-│── visualisation.py
-│── interactive_visualisation.py
-│── inverse_kinematics.py
-│── trajectory_planning.py
-|── click_to_move.py
-│── README.md
+├── src/
+│   ├── __init__.py
+│   ├── cartesian_analysis.py
+│   ├── click_to_move.py
+│   ├── closed_loop_simulation.py
+│   ├── control_analysis.py
+│   ├── control_visualisation.py
+│   ├── controlled_robot_visualisation.py
+│   ├── forward_kinematics.py
+│   ├── interactive_visualisation.py
+│   ├── inverse_kinematics.py
+│   ├── joint_simulation.py
+│   ├── metrics.py
+│   ├── pid_controller.py
+│   ├── pid_tuning.py
+│   ├── trajectory_planning.py
+│   ├── two_joint_control.py
+│   ├── two_joint_trajectory_tracking.py
+│   ├── visualisation.py
+│   └── workspace_visualisation.py
+│
+├── tests/
+│   ├── test_cartesian_analysis.py
+│   ├── test_control.py
+│   ├── test_kinematics.py
+│   ├── test_metrics.py
+│   ├── test_trajectory.py
+│   └── test_validation.py
+│
+├── control_demo.py
+├── controlled_robot_demo.py
+├── main.py
+├── pid_tuning_demo.py
+├── .gitignore
+├── README.md
+└── requirements.txt
+```
+
 ---
 
-# 🛠️ Installation & Usage
+## 🛠️ Installation
 
 Clone the repository:
 
 ```bash
 git clone https://github.com/SteamHunter360/robotics-arm-control.git
-
 cd robotics-arm-control
 ```
 
 Install dependencies:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
-Run the simulation:
-
-
-Run the forward kinematics visualisation:
-
-```bash
-python visualisation.py
-```
-
-Run the interactive slider visualisation:
-
-```bash
-python interactive_visualisation.py
-```
-
-Run the inverse kinematics solver:
-
-```bash
-python inverse_kinematics.py
-```
-
-## Click-to-Move Simulation
-
-Run:
-
-```bash
-python click_to_move.py
-```
-
-# 🎯 Expected Behaviour
-
-When complete:
-
-* A simulation window opens
-* The robotic arm is displayed
-* The arm moves toward a target position
-* Trajectory plots are generated
-* Simulation results are saved automatically
 
 ---
 
-# 🧪 Testing
+## ▶️ Usage
 
-Run validation tests:
+### Primary Controlled-Robot Application
 
 ```bash
-pytest tests/
+python main.py
 ```
 
-Testing verifies:
+### Single-Joint Closed-Loop Control Demo
 
-* Forward Kinematics Correctness
-* Inverse Kinematics Accuracy
-* End-Effector Position Error
-* Numerical Stability
+```bash
+python control_demo.py
+```
 
----
+### Quantitative PID Tuning Comparison
 
-# 🔮 Future Development
+```bash
+python pid_tuning_demo.py
+```
 
-Planned improvements include:
+### Controlled Cartesian Tracking Demo
 
-* Inverse Kinematics Solver
-* Animated Robotic Arm Motion
-* PID Joint Control
-* ROS Integration
-* Gazebo Integration
-* Obstacle Avoidance
-* 3DOF Extension
-* 6DOF Extension
-* 3D Simulation Environment
+```bash
+python controlled_robot_demo.py
+```
 
 ---
 
-# 🧠 What I Learned
+## 🧪 Testing
 
-This project is helping develop practical understanding of:
+Run the complete automated test suite:
 
-* Forward Kinematics
-* Inverse Kinematics
-* Robotics Mathematics
-* Control Systems
-* Numerical Methods
-* Python Engineering Applications
-* Engineering Software Development
+```bash
+python -m pytest tests/ -v
+```
+
+Current validation:
+
+```text
+39 automated tests
+```
+
+The test suite covers:
+
+- Forward kinematics
+- Inverse kinematics
+- Reachability validation
+- Trajectory generation
+- Integrated IK → trajectory → FK pipeline
+- Path metrics
+- PID controller behaviour
+- Controller output saturation
+- Controller reset behaviour
+- Simulated joint dynamics
+- Single-joint closed-loop convergence
+- Closed-loop response analysis
+- PID tuning comparison
+- Two-joint closed-loop control
+- Two-joint trajectory tracking
+- Cartesian path generation
+- Cartesian tracking analysis
+- Input validation and edge cases
 
 ---
 
-# 📌 Notes
+## 🔄 Continuous Integration
 
-This project is intentionally focused on building a working robotics system with visible outputs and engineering validation rather than theoretical discussion alone.
+The repository uses GitHub Actions to automatically:
 
-The emphasis is on producing a testable simulation that demonstrates robotics concepts through implementation.
+1. Check out the repository.
+2. Configure Python.
+3. Install project dependencies.
+4. Execute the complete test suite.
+
+The workflow runs on every push and pull request.
+
+This verifies that the project remains reproducible and that new changes do not break existing functionality.
 
 ---
 
-# 👤 Author
+## 🧩 Engineering Decisions and Trade-Offs
 
-Mechanical Engineering Student
+### Analytical Inverse Kinematics
 
-Interested in:
+An analytical IK solution was selected because the manipulator has two planar revolute joints and admits a closed-form solution.
 
-* Robotics
-* Automation
-* Control Systems
-* Mechanical Engineering
-* Engineering Software Development
-* Mechatronics
+This provides a computationally efficient and interpretable solution.
+
+For higher-dimensional manipulators, numerical IK methods would be more appropriate.
+
+### Independent Joint PID Controllers
+
+Each joint is controlled independently.
+
+This provides a clear architecture for demonstrating closed-loop trajectory tracking and controller-performance analysis.
+
+The model does not currently include nonlinear dynamic coupling between robot joints.
+
+### Simplified Joint Dynamics
+
+The simulated joints include inertia and viscous damping.
+
+This allows meaningful dynamic controller analysis while keeping the model interpretable.
+
+The plant does not currently model:
+
+- Gravity
+- Coriolis effects
+- Centrifugal effects
+- Joint friction nonlinearities
+- Actuator dynamics
+- Sensor noise
+- External disturbances
+
+### Joint-Space Trajectory Generation
+
+The current implementation uses joint-space interpolation.
+
+This provides predictable joint commands and a straightforward integration with the PID control layer.
+
+More advanced implementations could use velocity- and acceleration-constrained polynomial trajectories or Cartesian-space planning.
+
+---
+
+## ⚠️ Limitations
+
+The current system is a software simulation of a two-link planar robot.
+
+Limitations include:
+
+- No physical hardware integration
+- Simplified independent joint dynamics
+- No coupled manipulator dynamic model
+- No gravity compensation
+- No actuator model
+- No sensor model
+- No obstacle avoidance
+- No collision detection
+- No Cartesian feedback controller
+- No ROS or Gazebo integration
+
+These limitations define clear opportunities for future development.
+
+---
+
+## 🔮 Future Development
+
+Potential extensions include:
+
+- Coupled nonlinear manipulator dynamics
+- Gravity and Coriolis compensation
+- State-space control
+- LQR control
+- Model predictive control
+- Cartesian-space feedback control
+- Improved trajectory generation
+- Disturbance rejection analysis
+- Sensor noise simulation
+- Obstacle avoidance
+- Collision detection
+- ROS 2 integration
+- Gazebo simulation
+- Hardware implementation
+- Extension to higher-degree-of-freedom manipulators
+
+---
+
+## 🧠 Skills Demonstrated
+
+### Robotics
+
+- Forward and inverse kinematics
+- Joint-space trajectory generation
+- Cartesian path analysis
+- End-effector tracking validation
+
+### Control Systems
+
+- PID control
+- Closed-loop simulation
+- Dynamic response analysis
+- Controller tuning
+- Overshoot and settling-time analysis
+- Control-effort evaluation
+
+### Software Engineering
+
+- Modular Python architecture
+- Automated testing with pytest
+- Continuous integration
+- Input validation
+- Dependency management
+- Git version control
+- Technical documentation
+
+### Engineering Analysis
+
+- Quantitative performance metrics
+- Controller trade-off analysis
+- Numerical validation
+- System architecture design
+- Model limitations and engineering assumptions
+
+---
+
+## 👤 Author
+
+**SteamHunter360**
+
+Mechanical Engineering student developing practical experience in:
+
+- Robotics
+- Control systems
+- Mechatronics
+- Automation
+- Engineering software development
+
+---
+
+## 📄 Project Status
+
+The primary robotics and control pipeline is complete and validated through automated testing and continuous integration.
+
+Future work will focus on higher-fidelity dynamics, advanced control methods, and integration with larger robotics ecosystems.
+
+
+
