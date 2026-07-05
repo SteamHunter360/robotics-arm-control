@@ -21,7 +21,7 @@ from src.pid_tuning import (
     calculate_rms_control_effort,
     compare_pid_tunings,
 )
-
+from src.two_joint_control import simulate_two_joint_position_control
 
 def test_forward_kinematics_zero_angles():
     points = forward_kinematics(0, 0)
@@ -399,3 +399,25 @@ def test_compare_pid_tunings_returns_all_tunings():
         assert "overshoot" in result["metrics"]
         assert "settling_time" in result["metrics"]
         assert "rms_control_effort" in result["metrics"]
+
+def test_two_joint_position_control_converges_toward_targets():
+    target_theta1 = 60.0
+    target_theta2 = 45.0
+
+    results = simulate_two_joint_position_control(
+        target_theta1=target_theta1,
+        target_theta2=target_theta2,
+        initial_theta1=20.0,
+        initial_theta2=20.0,
+        duration=3.0,
+        dt=0.01,
+    )
+
+    final_theta1 = results["theta1_values"][-1]
+    final_theta2 = results["theta2_values"][-1]
+
+    assert abs(final_theta1 - target_theta1) < 5.0
+    assert abs(final_theta2 - target_theta2) < 5.0
+
+    assert len(results["time_values"]) == len(results["theta1_values"])
+    assert len(results["time_values"]) == len(results["theta2_values"])
