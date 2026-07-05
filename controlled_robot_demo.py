@@ -5,6 +5,7 @@ from src.cartesian_analysis import (
     calculate_end_effector_path,
     analyse_cartesian_tracking,
 )
+from src.controlled_robot_visualisation import animate_desired_vs_actual_paths
 
 
 def main():
@@ -44,6 +45,8 @@ def main():
     print(f"RMS Cartesian error: {cartesian_results['rms_error']:.6f} m")
     print(f"Desired path length: {cartesian_results['desired_path_length']:.6f} m")
     print(f"Actual path length: {cartesian_results['actual_path_length']:.6f} m")
+
+    animate_desired_vs_actual_paths(desired_path, actual_path)
 
 
 if __name__ == "__main__":
