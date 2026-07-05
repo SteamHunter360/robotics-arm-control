@@ -11,6 +11,7 @@ from src.metrics import (
 )
 from src.pid_controller import PIDController
 from src.joint_simulation import JointSimulation
+from src.closed_loop_simulation import simulate_joint_position_control
 
 
 def test_forward_kinematics_zero_angles():
@@ -258,3 +259,20 @@ def test_joint_simulation_zero_input_stays_at_rest():
 def test_joint_simulation_rejects_invalid_inertia():
     with pytest.raises(ValueError):
         JointSimulation(inertia=0.0)
+
+def test_closed_loop_joint_converges_toward_target():
+    target_angle = 45.0
+
+    time_values, angle_values, control_values = simulate_joint_position_control(
+        target_angle=target_angle,
+        initial_angle=0.0,
+        duration=3.0,
+        dt=0.01,
+    )
+
+    final_angle = angle_values[-1]
+    final_error = abs(final_angle - target_angle)
+
+    assert final_error < 5.0
+    assert len(time_values) == len(angle_values)
+    assert len(angle_values) == len(control_values)
