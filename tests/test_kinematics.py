@@ -177,3 +177,50 @@ def test_pid_controller_generates_positive_output_for_positive_error():
     )
 
     assert output == pytest.approx(4.0)
+
+def test_pid_controller_generates_negative_output_for_negative_error():
+    controller = PIDController(
+        kp=2.0,
+        ki=0.0,
+        kd=0.0,
+        dt=0.1,
+    )
+
+    output = controller.update(
+        setpoint=8.0,
+        measurement=10.0,
+    )
+
+    assert output == pytest.approx(-4.0)
+
+
+def test_pid_controller_output_limit():
+    controller = PIDController(
+        kp=10.0,
+        ki=0.0,
+        kd=0.0,
+        dt=0.1,
+        output_limit=5.0,
+    )
+
+    output = controller.update(
+        setpoint=10.0,
+        measurement=0.0,
+    )
+
+    assert output == pytest.approx(5.0)
+
+
+def test_pid_controller_reset():
+    controller = PIDController(
+        kp=1.0,
+        ki=1.0,
+        kd=0.0,
+        dt=0.1,
+    )
+
+    controller.update(setpoint=10.0, measurement=0.0)
+    controller.reset()
+
+    assert controller.integral == pytest.approx(0.0)
+    assert controller.previous_error == pytest.approx(0.0)
