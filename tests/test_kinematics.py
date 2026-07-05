@@ -10,11 +10,17 @@ from src.metrics import (
     calculate_max_step_distance,
     calculate_rms_error,
     calculate_max_tracking_error,
+    calculate_overshoot,
+    calculate_settling_time,
 )
 from src.pid_controller import PIDController
 from src.joint_simulation import JointSimulation
 from src.closed_loop_simulation import simulate_joint_position_control
 from src.control_analysis import analyse_closed_loop_response
+from src.pid_tuning import (
+    calculate_rms_control_effort,
+    compare_pid_tunings,
+)
 
 
 def test_forward_kinematics_zero_angles():
@@ -86,6 +92,11 @@ def test_generate_joint_trajectory_number_of_frames():
     assert len(trajectory) == 100
 
 
+def test_generate_joint_trajectory_rejects_invalid_frames():
+    with pytest.raises(ValueError):
+        generate_joint_trajectory(20, 80, 1)
+
+
 def test_integrated_ik_trajectory_fk_pipeline():
     target_x = 0.9
     target_y = 1.2
@@ -140,10 +151,6 @@ def test_calculate_position_error_known_distance():
 
     assert error == pytest.approx(5.0)
 
-    
-def test_generate_joint_trajectory_rejects_invalid_frames():
-    with pytest.raises(ValueError):
-        generate_joint_trajectory(20, 80, 1)
 
 def test_calculate_path_length_known_path():
     points = [
@@ -156,6 +163,7 @@ def test_calculate_path_length_known_path():
 
     assert path_length == pytest.approx(10.0)
 
+
 def test_calculate_max_step_distance_known_path():
     points = [
         (0, 0),
@@ -166,6 +174,51 @@ def test_calculate_max_step_distance_known_path():
     max_step_distance = calculate_max_step_distance(points)
 
     assert max_step_distance == pytest.approx(10.0)
+
+
+def test_calculate_rms_error_known_values():
+    actual_values = [1, 2, 3]
+    target_value = 2
+
+    rms_error = calculate_rms_error(actual_values, target_value)
+
+    assert rms_error == pytest.approx((2 / 3) ** 0.5)
+
+
+def test_calculate_max_tracking_error_known_values():
+    actual_values = [1, 2, 3]
+    target_value = 2
+
+    max_error = calculate_max_tracking_error(
+        actual_values,
+        target_value,
+    )
+
+    assert max_error == pytest.approx(1.0)
+
+
+def test_calculate_overshoot_known_values():
+    actual_values = [0, 5, 12, 10]
+    target_value = 10
+
+    overshoot = calculate_overshoot(actual_values, target_value)
+
+    assert overshoot == pytest.approx(2.0)
+
+
+def test_calculate_settling_time_known_values():
+    time_values = [0, 1, 2, 3, 4]
+    actual_values = [0, 8, 9.7, 10.1, 10.0]
+    target_value = 10
+
+    settling_time = calculate_settling_time(
+        time_values,
+        actual_values,
+        target_value,
+        tolerance=0.05,
+    )
+
+    assert settling_time == pytest.approx(2)
 
 
 def test_pid_controller_generates_positive_output_for_positive_error():
@@ -182,6 +235,7 @@ def test_pid_controller_generates_positive_output_for_positive_error():
     )
 
     assert output == pytest.approx(4.0)
+
 
 def test_pid_controller_generates_negative_output_for_negative_error():
     controller = PIDController(
@@ -230,6 +284,7 @@ def test_pid_controller_reset():
     assert controller.integral == pytest.approx(0.0)
     assert controller.previous_error == pytest.approx(0.0)
 
+
 def test_joint_simulation_positive_torque_increases_angle():
     joint = JointSimulation(
         initial_angle=0.0,
@@ -263,6 +318,7 @@ def test_joint_simulation_rejects_invalid_inertia():
     with pytest.raises(ValueError):
         JointSimulation(inertia=0.0)
 
+
 def test_closed_loop_joint_converges_toward_target():
     target_angle = 45.0
 
@@ -280,34 +336,66 @@ def test_closed_loop_joint_converges_toward_target():
     assert len(time_values) == len(angle_values)
     assert len(angle_values) == len(control_values)
 
-def test_calculate_rms_error_known_values():
-    actual_values = [1, 2, 3]
-    target_value = 2
-
-    rms_error = calculate_rms_error(actual_values, target_value)
-
-    assert rms_error == pytest.approx((2 / 3) ** 0.5)
-
-def test_calculate_max_tracking_error_known_values():
-    actual_values = [1, 2, 3]
-    target_value = 2
-
-    max_error = calculate_max_tracking_error(
-        actual_values,
-        target_value,
-    )
-
-    assert max_error == pytest.approx(1.0)
 
 def test_analyse_closed_loop_response_returns_expected_metrics():
     actual_values = [0, 5, 10]
     target_value = 10
+    time_values = [0, 1, 2]
 
     results = analyse_closed_loop_response(
+        time_values,
         actual_values,
         target_value,
     )
 
     assert results["final_error"] == pytest.approx(0.0)
-    assert results["rms_error"] == pytest.approx(((100 + 25 + 0) / 3) ** 0.5)
+    assert results["rms_error"] == pytest.approx(
+        ((100 + 25 + 0) / 3) ** 0.5
+    )
     assert results["max_error"] == pytest.approx(10.0)
+    assert results["overshoot"] == pytest.approx(0.0)
+    assert results["settling_time"] == pytest.approx(2.0)
+
+
+def test_calculate_rms_control_effort_known_values():
+    control_values = [3.0, 4.0]
+
+    rms_effort = calculate_rms_control_effort(control_values)
+
+    assert rms_effort == pytest.approx((25 / 2) ** 0.5)
+
+
+def test_compare_pid_tunings_returns_all_tunings():
+    tunings = {
+        "Tuning A": {
+            "kp": 15.0,
+            "ki": 0.0,
+            "kd": 4.0,
+        },
+        "Tuning B": {
+            "kp": 30.0,
+            "ki": 0.0,
+            "kd": 5.0,
+        },
+    }
+
+    results = compare_pid_tunings(
+        tunings,
+        duration=1.0,
+        dt=0.01,
+    )
+
+    assert set(results.keys()) == {"Tuning A", "Tuning B"}
+
+    for result in results.values():
+        assert "gains" in result
+        assert "metrics" in result
+        assert "time_values" in result
+        assert "angle_values" in result
+        assert "control_values" in result
+
+        assert "final_error" in result["metrics"]
+        assert "rms_error" in result["metrics"]
+        assert "overshoot" in result["metrics"]
+        assert "settling_time" in result["metrics"]
+        assert "rms_control_effort" in result["metrics"]

@@ -101,3 +101,24 @@ def calculate_max_tracking_error(actual_values, target_value):
         abs(actual - target_value)
         for actual in actual_values
     )
+
+def calculate_overshoot(actual_values, target_value):
+    if target_value == 0:
+        return 0.0
+
+    max_value = max(actual_values)
+    overshoot = max_value - target_value
+
+    return max(0.0, overshoot)
+
+
+def calculate_settling_time(time_values, actual_values, target_value, tolerance=0.02):
+    tolerance_band = abs(target_value) * tolerance
+
+    for i in range(len(actual_values)):
+        remaining_values = actual_values[i:]
+
+        if all(abs(value - target_value) <= tolerance_band for value in remaining_values):
+            return time_values[i]
+
+    return None
