@@ -22,6 +22,7 @@ from src.pid_tuning import (
     compare_pid_tunings,
 )
 from src.two_joint_control import simulate_two_joint_position_control
+from src.two_joint_trajectory_tracking import simulate_two_joint_trajectory_tracking
 
 def test_forward_kinematics_zero_angles():
     points = forward_kinematics(0, 0)
@@ -421,3 +422,18 @@ def test_two_joint_position_control_converges_toward_targets():
 
     assert len(results["time_values"]) == len(results["theta1_values"])
     assert len(results["time_values"]) == len(results["theta2_values"])
+
+def test_two_joint_trajectory_tracking_returns_matching_lengths():
+    desired_theta1 = generate_joint_trajectory(20, 60, 100)
+    desired_theta2 = generate_joint_trajectory(20, 45, 100)
+
+    results = simulate_two_joint_trajectory_tracking(
+        desired_theta1,
+        desired_theta2,
+    )
+
+    assert len(results["time_values"]) == 100
+    assert len(results["actual_theta1_values"]) == 100
+    assert len(results["actual_theta2_values"]) == 100
+    assert len(results["control_1_values"]) == 100
+    assert len(results["control_2_values"]) == 100
