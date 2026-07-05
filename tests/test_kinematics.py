@@ -14,6 +14,7 @@ from src.metrics import (
 from src.pid_controller import PIDController
 from src.joint_simulation import JointSimulation
 from src.closed_loop_simulation import simulate_joint_position_control
+from src.control_analysis import analyse_closed_loop_response
 
 
 def test_forward_kinematics_zero_angles():
@@ -297,3 +298,16 @@ def test_calculate_max_tracking_error_known_values():
     )
 
     assert max_error == pytest.approx(1.0)
+
+def test_analyse_closed_loop_response_returns_expected_metrics():
+    actual_values = [0, 5, 10]
+    target_value = 10
+
+    results = analyse_closed_loop_response(
+        actual_values,
+        target_value,
+    )
+
+    assert results["final_error"] == pytest.approx(0.0)
+    assert results["rms_error"] == pytest.approx(((100 + 25 + 0) / 3) ** 0.5)
+    assert results["max_error"] == pytest.approx(10.0)
